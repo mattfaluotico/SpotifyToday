@@ -26,6 +26,7 @@ xcuserdata
 ## Obj-C/Swift specific
 *.hmap
 *.ipa
+oauth.plist
 
 # Swift Package Manager
 #
