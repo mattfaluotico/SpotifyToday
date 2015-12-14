@@ -1,0 +1,2 @@
+# OAuth for Swift. This is for the Spotify login.
+github "OAuthSwift/OAuthSwift" ~> 0.4.6
