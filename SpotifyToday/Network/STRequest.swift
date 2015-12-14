@@ -7,10 +7,12 @@
 //
 
 import Cocoa
+import OAuthSwift
 
 class STRequest: NSObject {
 
     func addSong(songID: String) {
         
+
     }
 }
