@@ -21,7 +21,15 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
-
-
+    
+    override func viewDidAppear() {
+        self.performSelector(Selector("login_test"), withObject: nil, afterDelay: 2);
+    }
+    
+    
+    func login_test() {
+        var _ = STAuth();
+        
+    }
 }
 

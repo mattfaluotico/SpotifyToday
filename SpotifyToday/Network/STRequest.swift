@@ -9,10 +9,16 @@
 import Cocoa
 import OAuthSwift
 
-class STRequest: NSObject {
-
+class STRequest {
+    
+    private let client: OAuthSwiftClient;
+    
+    init(client: OAuthSwiftClient) {
+        self.client = client;
+    }
+    
     func addSong(songID: String) {
-        
-
+        let url = K.SpotifyAddSongURL(songID);
+                
     }
 }

@@ -36,6 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationHandleOpenURL(url: NSURL) {
         if (url.host == "oauth-callback") {
+            print("opening url")
             OAuth2Swift.handleOpenURL(url)
         } else {
             // Google provider is the only one wuth your.bundle.id url schema.
