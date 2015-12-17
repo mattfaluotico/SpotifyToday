@@ -25,7 +25,7 @@ class EvenetManager {
             self.shouldUpdate = false;
             
             let cmd = notification.object as! String
-            
+        
             switch(cmd) {
             case "save" : self.save(); break;
             case "next": SpotifyAppleScript.progress.next();
