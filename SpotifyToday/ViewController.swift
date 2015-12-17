@@ -15,12 +15,8 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         
-        var button = NSButton(frame: self.view.frame);
-        button.target = self;
-        button.action = Selector("addSong");
-        self.view.addSubview(button);
+    
     }
 
     override var representedObject: AnyObject? {
@@ -43,13 +39,5 @@ class ViewController: NSViewController {
         STAuth.spotify();
     }
     
-    func addSong() {
-        let sampleSong = "48bo7uexDvAThcRDvEB2W7";
-        
-        
-        let req = STRequest()
-        req.addSong(sampleSong);
-        
-    }
 }
 

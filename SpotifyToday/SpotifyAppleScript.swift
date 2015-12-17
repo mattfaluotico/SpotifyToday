@@ -8,9 +8,9 @@
 
 import Cocoa
 
-struct SpotifyAppleScript {
+class SpotifyAppleScript {
     
-    struct progress {
+    class progress {
         
         var cat = "cadrds";
         
@@ -27,7 +27,7 @@ struct SpotifyAppleScript {
         }
     }
     
-    struct details {
+    class details {
         static func album() -> String {
             return SpotifyAppleScript.script("album of current track");
         }
@@ -40,14 +40,21 @@ struct SpotifyAppleScript {
             return SpotifyAppleScript.script("name of current track");
         }
         
+        static func id() -> String {
+            return SpotifyAppleScript.script("id of current track");
+        }
+        
         static func artwork() {
             
         }
         
+        static func state() -> String {
+            return SpotifyAppleScript.script("player state");
+        }
     }
     
     private static func script(text: String) -> String {
-        let script = NSAppleScript(source: "\tell application \"Spotify\" to \(text)" )
+        let script = NSAppleScript(source: "tell application \"Spotify\" to \(text)" )
         var err: NSDictionary?
         let result = script?.executeAndReturnError(&err);
         return (result?.stringValue != nil) ? result!.stringValue! : "";

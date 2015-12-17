@@ -7,20 +7,31 @@
 //
 
 import Cocoa
+import NotificationCenter
 import OAuthSwift
+
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
+    var controller = NCWidgetController.widgetController()
+    
     // When the application ends
     func applicationWillTerminate(aNotification: NSNotification) {
-        // Insert code here to tear down your application
+        controller.setHasContent(true, forWidgetWithBundleIdentifier: K.bundleWidget)
     }
     
     // Launches with a notificaiton, checks if it's a URL
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // listen to scheme url
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(self, andSelector:"handleGetURLEvent:withReplyEvent:", forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+        
+        let app: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("com.spotify.client") as [NSRunningApplication]
+        
+        if app.isEmpty {
+            controller.setHasContent(false, forWidgetWithBundleIdentifier: K.bundleWidget)
+        }
+            
     }
     
     // Response to the URL

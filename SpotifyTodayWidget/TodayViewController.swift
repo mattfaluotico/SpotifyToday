@@ -33,7 +33,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     }
 
     func test() {
-        let notify = NSNotification(name: "SpotifyToday", object: "test_event")
+        let notify = NSNotification(name: "SpotifyToday", object: "update")
         centerReceiver.postNotification(notify)
     }
 }

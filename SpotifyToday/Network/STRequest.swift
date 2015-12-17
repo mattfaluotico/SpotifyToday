@@ -36,7 +36,7 @@ class STRequest {
         self.client = oauthswift.client;
     }
     
-    func addSong(songID: String) {
+    func addSong(songID: String, onSuccess callback: () -> ()) {
     
         let url = K.SpotifyAddSongURL(songID);
         
@@ -49,7 +49,7 @@ class STRequest {
             parameters: [:],
             headers: ["Accept": "application/json", "Authorization": bearer],
             success: { (data, response) -> Void in
-                print("added song");
+                callback()
             }) { (error) -> Void in
                 print("failure to add song");
                 print(error);

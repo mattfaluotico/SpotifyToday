@@ -17,6 +17,7 @@ class K: NSObject {
     static let SpotifyTokenURL = "https://accounts.spotify.com/api/token";
     
     static let bundle = "mpf.SpotifyToday";
+    static let bundleWidget = "mpf.SpotifyToday.widget"
     
     static let STCredKey = "STTokenKey";
     static let STCredSecretKey = "STTokenSecretKey"
