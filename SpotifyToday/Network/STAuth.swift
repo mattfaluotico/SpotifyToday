@@ -11,36 +11,40 @@ import OAuthSwift
 
 class STAuth: NSObject {
     
-    override init() {
-        super.init();
-    
-        let oauthswift = OAuth2Swift(
+    static func spotify(oauthswift: OAuth2Swift? = nil) {
+        
+        let auth = oauthswift ?? OAuth2Swift(
             consumerKey:    STAuthKeys.oauthConsumerKey!,
             consumerSecret: STAuthKeys.oauthSecertKey!,
             authorizeUrl:   K.SpotifyAuthURL,
-            accessTokenUrl: "https://accounts.spotify.com/api/token",
+            accessTokenUrl: K.SpotifyTokenURL,
             responseType:   "code"
         );
         
-        
-        oauthswift.authorizeWithCallbackURL(
+        auth.authorizeWithCallbackURL(
             
             NSURL(string: "SpotifyToday://oauth-callback/spotify")!,
             scope: "user-library-modify",
             state: generateStateWithLength(20),
             success: { credential, response, parameters in
                 print(credential.oauth_token)
+                self.saveCreds(auth.client);
             },
-            
             failure: { error in
                 print(error.localizedDescription)
             }
         );
-        
-        
     }
     
-    private func generateStateWithLength (len : Int) -> String {
+    static private func saveCreds(client: OAuthSwiftClient) {
+        
+        let keychain = NSUserDefaults.standardUserDefaults();
+        keychain.setObject(client.credential.oauth_token, forKey: K.STCredKey);
+        keychain.setObject(client.credential.oauth_token_secret, forKey: K.STCredSecretKey);
+        keychain.synchronize();
+    }
+    
+    static private func generateStateWithLength (len : Int) -> String {
         let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let randomString : NSMutableString = NSMutableString(capacity: len)
         for (var i=0; i < len; i++){

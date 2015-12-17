@@ -10,10 +10,17 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    let em = EvenetManager();
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        var button = NSButton(frame: self.view.frame);
+        button.target = self;
+        button.action = Selector("addSong");
+        self.view.addSubview(button);
     }
 
     override var representedObject: AnyObject? {
@@ -23,12 +30,25 @@ class ViewController: NSViewController {
     }
     
     override func viewDidAppear() {
-        self.performSelector(Selector("login_test"), withObject: nil, afterDelay: 2);
+        let defs = NSUserDefaults.standardUserDefaults();
+        if let _ = defs.objectForKey(K.STCredKey) {
+            print("already logged in");
+        } else {
+            self.performSelector(Selector("login_test"), withObject: nil, afterDelay: 2);
+        }
     }
     
     
     func login_test() {
-        var _ = STAuth();
+        STAuth.spotify();
+    }
+    
+    func addSong() {
+        let sampleSong = "48bo7uexDvAThcRDvEB2W7";
+        
+        
+        let req = STRequest()
+        req.addSong(sampleSong);
         
     }
 }
