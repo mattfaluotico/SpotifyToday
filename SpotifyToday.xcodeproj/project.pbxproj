@@ -158,7 +158,6 @@
 				AC20188D1C1F3B4600F9E775 /* Assets.xcassets */,
 				AC20188F1C1F3B4600F9E775 /* Main.storyboard */,
 				AC2018921C1F3B4600F9E775 /* Info.plist */,
-				AC2018DF1C1F4B0E00F9E775 /* oauth.plist */,
 			);
 			name = etc;
 			sourceTree = "<group>";
@@ -166,6 +165,7 @@
 		AC2018B41C1F3BA800F9E775 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				AC2018DF1C1F4B0E00F9E775 /* oauth.plist */,
 				AC2018BC1C1F3EFF00F9E775 /* STAuthKeys.swift */,
 				AC2018E11C1F4DE100F9E775 /* STAuth.swift */,
 			);
