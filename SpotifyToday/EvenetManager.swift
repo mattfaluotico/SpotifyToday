@@ -28,6 +28,7 @@ class EvenetManager {
         
             switch(cmd) {
             case "save" : self.save(); break;
+            case "share" : self.share(); break;
             case "next": SpotifyAppleScript.progress.next();
             case "previous": SpotifyAppleScript.progress.previous();
             case "toggle" : SpotifyAppleScript.progress.toggle();
@@ -83,5 +84,15 @@ class EvenetManager {
         self.request.addSong(tid) { () -> () in
             print("song added");
         }
+    }
+    
+    func share() {
+        
+        let tid = SpotifyAppleScript.details.id();
+        let shareid = K.SpotifyTrackURL(tid);
+        
+        let pb = NSPasteboard.generalPasteboard();
+        pb.clearContents();
+        pb.writeObjects([shareid]);
     }
 }

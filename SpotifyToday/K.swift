@@ -26,4 +26,8 @@ class K: NSObject {
     static func SpotifyAddSongURL(songID: String) -> String {
         return "https://api.spotify.com/v1/me/tracks?ids=\(songID)";
     }
+    
+    static func SpotifyTrackURL(songID: String) -> String {
+        return "https://open.spotify.com/track/\(songID)";
+    }
 }
