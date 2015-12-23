@@ -18,6 +18,11 @@
 		AC2018E01C1F4B0E00F9E775 /* oauth.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC2018DF1C1F4B0E00F9E775 /* oauth.plist */; };
 		AC2018E21C1F4DE100F9E775 /* STAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2018E11C1F4DE100F9E775 /* STAuth.swift */; };
 		AC2018E41C1F501100F9E775 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2018E31C1F501100F9E775 /* K.swift */; };
+		AC20CAFA1C2B570C00594732 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = AC20CAF51C2B570C00594732 /* add.png */; };
+		AC20CAFB1C2B570C00594732 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = AC20CAF61C2B570C00594732 /* next.png */; };
+		AC20CAFC1C2B570C00594732 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = AC20CAF71C2B570C00594732 /* pause.png */; };
+		AC20CAFD1C2B570C00594732 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = AC20CAF81C2B570C00594732 /* play.png */; };
+		AC20CAFE1C2B570C00594732 /* previous.png in Resources */ = {isa = PBXBuildFile; fileRef = AC20CAF91C2B570C00594732 /* previous.png */; };
 		AC2B1E9B1C222E43001C8A25 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC20189E1C1F3B8C00F9E775 /* NotificationCenter.framework */; };
 		AC2B1EA01C222E43001C8A25 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2B1E9F1C222E43001C8A25 /* TodayViewController.swift */; };
 		AC2B1EA31C222E43001C8A25 /* TodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC2B1EA11C222E43001C8A25 /* TodayViewController.xib */; };
@@ -77,6 +82,11 @@
 		AC2018DF1C1F4B0E00F9E775 /* oauth.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oauth.plist; sourceTree = "<group>"; };
 		AC2018E11C1F4DE100F9E775 /* STAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = STAuth.swift; path = Network/STAuth.swift; sourceTree = "<group>"; };
 		AC2018E31C1F501100F9E775 /* K.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
+		AC20CAF51C2B570C00594732 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
+		AC20CAF61C2B570C00594732 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next.png; sourceTree = "<group>"; };
+		AC20CAF71C2B570C00594732 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		AC20CAF81C2B570C00594732 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		AC20CAF91C2B570C00594732 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = previous.png; sourceTree = "<group>"; };
 		AC2B1E9A1C222E43001C8A25 /* SpotifyTodayWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpotifyTodayWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC2B1E9E1C222E43001C8A25 /* SpotifyTodayWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpotifyTodayWidget.entitlements; sourceTree = "<group>"; };
 		AC2B1E9F1C222E43001C8A25 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -180,9 +190,22 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
+		AC20CAFF1C2B571000594732 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				AC20CAF51C2B570C00594732 /* add.png */,
+				AC20CAF61C2B570C00594732 /* next.png */,
+				AC20CAF71C2B570C00594732 /* pause.png */,
+				AC20CAF81C2B570C00594732 /* play.png */,
+				AC20CAF91C2B570C00594732 /* previous.png */,
+			);
+			name = img;
+			sourceTree = "<group>";
+		};
 		AC2B1E9C1C222E43001C8A25 /* SpotifyTodayWidget */ = {
 			isa = PBXGroup;
 			children = (
+				AC20CAFF1C2B571000594732 /* img */,
 				AC2B1E9F1C222E43001C8A25 /* TodayViewController.swift */,
 				AC2B1EA11C222E43001C8A25 /* TodayViewController.xib */,
 				AC2B1EA41C222E43001C8A25 /* Info.plist */,
@@ -294,8 +317,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC20CAFA1C2B570C00594732 /* add.png in Resources */,
 				AC2B1EA31C222E43001C8A25 /* TodayViewController.xib in Resources */,
+				AC20CAFC1C2B570C00594732 /* pause.png in Resources */,
+				AC20CAFE1C2B570C00594732 /* previous.png in Resources */,
+				AC20CAFB1C2B570C00594732 /* next.png in Resources */,
 				AC2B1EA71C222E43001C8A25 /* InfoPlist.strings in Resources */,
+				AC20CAFD1C2B570C00594732 /* play.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
