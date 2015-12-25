@@ -30,6 +30,7 @@
 		AC2B1EAA1C222E43001C8A25 /* SpotifyTodayWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AC2B1E9A1C222E43001C8A25 /* SpotifyTodayWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AC2B1EAF1C2230FE001C8A25 /* SpotifyAppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2B1EAE1C2230FE001C8A25 /* SpotifyAppleScript.swift */; };
 		AC7067051C222A0F00A98646 /* EvenetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7067041C222A0F00A98646 /* EvenetManager.swift */; };
+		AC72769C1C2DD06100117A4D /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = AC72769B1C2DD06100117A4D /* share.png */; };
 		ACCF9AA11C21EFEE00514BBD /* Readme.md in Sources */ = {isa = PBXBuildFile; fileRef = ACCF9AA01C21EFEE00514BBD /* Readme.md */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +96,7 @@
 		AC2B1EA61C222E43001C8A25 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AC2B1EAE1C2230FE001C8A25 /* SpotifyAppleScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyAppleScript.swift; sourceTree = "<group>"; };
 		AC7067041C222A0F00A98646 /* EvenetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvenetManager.swift; sourceTree = "<group>"; };
+		AC72769B1C2DD06100117A4D /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		ACCF9AA01C21EFEE00514BBD /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,6 +200,7 @@
 				AC20CAF71C2B570C00594732 /* pause.png */,
 				AC20CAF81C2B570C00594732 /* play.png */,
 				AC20CAF91C2B570C00594732 /* previous.png */,
+				AC72769B1C2DD06100117A4D /* share.png */,
 			);
 			name = img;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				AC20CAFB1C2B570C00594732 /* next.png in Resources */,
 				AC2B1EA71C222E43001C8A25 /* InfoPlist.strings in Resources */,
 				AC20CAFD1C2B570C00594732 /* play.png in Resources */,
+				AC72769C1C2DD06100117A4D /* share.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
