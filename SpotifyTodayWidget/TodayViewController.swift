@@ -16,13 +16,9 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     override var nibName: String? {
         return "TodayViewController"
     }
-
-    
-    @IBOutlet weak var button: NSButton!
     
     override func viewDidAppear() {
-        self.button.target = self;
-        self.button.action = Selector("test");
+
     }
     
     func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)!) {
@@ -31,9 +27,35 @@ class TodayViewController: NSViewController, NCWidgetProviding {
         // time we called you
         completionHandler(.NoData)
     }
-
-    func test() {
-        let notify = NSNotification(name: "SpotifyToday", object: "test")
-        centerReceiver.postNotification(notify)
+    
+    // MARK: Track info labsl
+    
+    @IBOutlet weak var songLabel: NSTextField!
+    @IBOutlet weak var artistLabel: NSTextField!
+    @IBOutlet weak var albumLabel: NSTextField!
+    @IBOutlet weak var albumArtwork: NSImageView!
+    
+    // MARK: Buttons
+    
+    @IBOutlet weak var addButton: NSButton!
+    
+    @IBOutlet weak var playPauseButton: NSButton!
+    
+    // MARK: Button Actions
+    
+    @IBAction func shareButton(sender: AnyObject) {
     }
+    
+    @IBAction func nextButton(sender: AnyObject) {
+    }
+
+    @IBAction func playButton(sender: AnyObject) {
+    }
+    
+    @IBAction func previousButton(sender: AnyObject) {
+    }
+    
+    @IBAction func addButton(sender: AnyObject) {
+    }
+    
 }
