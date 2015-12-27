@@ -13,7 +13,7 @@ class EvenetManager {
 
     let listener = NSDistributedNotificationCenter();
     var centerReceiver = NSDistributedNotificationCenter();
-    var data = Dictionary<String, String>();
+    var data = Dictionary<String, AnyObject>();
     let request: STRequest;
     var shouldUpdate = true;
     
@@ -75,12 +75,20 @@ class EvenetManager {
     func updateModel() {
         
         self.data["state"] = SpotifyAppleScript.details.state();
+        let state =  self.data["state"] as! String;
         
-        if self.data["state"] != "kPSS" {
+        if state != "kPSS" {
             self.data["song"] = SpotifyAppleScript.details.song();
             self.data["artist"] = SpotifyAppleScript.details.artist();
             self.data["album"] = SpotifyAppleScript.details.album();
+            
+            if state == "kPSP" {
+                self.data["playing"] = true;
+            } else if state == "kPSp" {
+                self.data["playing"] = false;
+            }
         }
+        
         
         let defaults = NSUserDefaults(suiteName: "mpf.SpotifyToday.group")!;
         defaults.setPersistentDomain(self.data, forName: "mpf.SpotifyToday.group");

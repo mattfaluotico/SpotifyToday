@@ -111,13 +111,14 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     
     func update() {
         
-        
         let defs = NSUserDefaults(suiteName: "mpf.SpotifyToday.group")!;
         
         if let data =  defs.persistentDomainForName("mpf.SpotifyToday.group") {
             self.songLabel.stringValue = data["song"] as! String
             self.artistLabel.stringValue = data["artist"] as! String
             self.albumLabel.stringValue = data["album"] as! String
+            self.isPlaying = data["playing"] as! Bool
+            self.togglePlay();
         }
     }
     
