@@ -119,6 +119,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
             self.albumLabel.stringValue = data["album"] as! String
             self.isPlaying = data["playing"] as! Bool
             self.togglePlay();
+
         }
     }
     
