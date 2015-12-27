@@ -97,7 +97,7 @@ class EvenetManager {
     }
     
     private func strip(inout songId: String) {
-        // spotify:track:2Ezxd6mkBPVQATDC4CnN3W
+        // strips the extra info from the track uri
         let range = songId.rangeOfString("spotify:track:");
         songId.replaceRange(range!, with: "");
     }
@@ -105,12 +105,14 @@ class EvenetManager {
     func save() {
                 
         var tid = SpotifyAppleScript.details.id();
-
+        let song = SpotifyAppleScript.details.song();
+        
         strip(&tid);
         print(tid);
         
         self.request.addSong(tid) { () -> () in
             print("song added");
+            self.notify("share", song: song);
         }
     }
     
@@ -123,5 +125,20 @@ class EvenetManager {
         let pb = NSPasteboard.generalPasteboard();
         pb.clearContents();
         pb.writeObjects([shareid]);
+        
+        self.notify("share", song: SpotifyAppleScript.details.song());
+    }
+    
+    func notify(type: String, song: String) {
+        let notificaiton = NSUserNotification()
+        
+        if (type == "save") {
+            notificaiton.title = "Song Added";
+            notificaiton.informativeText = "\"\(song)\" has been added to your Spotify library";
+        } else {
+            notificaiton.title = "Share Link Copied";
+            notificaiton.informativeText = "The link to \"\(song)\" has been copied to your clipboard";
+        }
+        NSUserNotificationCenter.defaultUserNotificationCenter().deliverNotification(notificaiton);
     }
 }
