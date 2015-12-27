@@ -85,4 +85,14 @@ class EvenetManager {
             print("song added");
         }
     }
+    
+    func share() {
+        
+        let tid = SpotifyAppleScript.details.id();
+        let shareid = K.SpotifyTrackURL(tid);
+        
+        let pb = NSPasteboard.generalPasteboard();
+        pb.clearContents();
+        pb.writeObjects([shareid]);
+    }
 }
