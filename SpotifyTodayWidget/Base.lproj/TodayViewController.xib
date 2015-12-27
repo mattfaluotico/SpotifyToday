@@ -22,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="318" height="133.5"/>
             <subviews>
                 <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ok-NU-DnV">
-                    <rect key="frame" x="0.0" y="-1" width="298" height="133.5"/>
+                    <rect key="frame" x="0.0" y="-1" width="298" height="134"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SwW-Gx-wBZ">
                             <rect key="frame" x="81" y="10" width="35" height="31"/>
@@ -103,7 +103,7 @@
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="default" id="uSE-2n-HMp"/>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UUK-Bd-8xT">
-                            <rect key="frame" x="76" y="114.5" width="224" height="19"/>
+                            <rect key="frame" x="76" y="114" width="224" height="19"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Song" usesSingleLineMode="YES" id="cfg-as-Mo9">
                                 <font key="font" metaFont="system" size="15"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
