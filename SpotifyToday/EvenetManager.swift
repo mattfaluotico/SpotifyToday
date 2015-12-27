@@ -81,7 +81,6 @@ class EvenetManager {
             self.data["song"] = SpotifyAppleScript.details.song();
             self.data["artist"] = SpotifyAppleScript.details.artist();
             self.data["album"] = SpotifyAppleScript.details.album();
-            self.data["artwork"] = SpotifyAppleScript.details.getCover();
             
             if state == "kPSP" {
                 self.data["playing"] = true;

@@ -119,14 +119,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
             self.albumLabel.stringValue = data["album"] as! String
             self.isPlaying = data["playing"] as! Bool
             self.togglePlay();
-            
-//            let cover = data["artwork"] as! NSData;
-//            let coverImage = NSImage(data: cover);
-//            if (coverImage != nil) {
-//                self.albumArtwork.image = coverImage;
-//            } else {
-//                self.albumArtwork.image = NSImage(named: "default");
-//            }
+
         }
     }
     
