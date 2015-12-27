@@ -28,6 +28,7 @@ class EvenetManager {
         
             switch(cmd) {
             case "save" : self.save(); break;
+            case "share" : self.share(); break;
             case "next": SpotifyAppleScript.progress.next();
             case "previous": SpotifyAppleScript.progress.previous();
             case "toggle" : SpotifyAppleScript.progress.toggle();

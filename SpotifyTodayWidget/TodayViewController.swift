@@ -12,17 +12,14 @@ import NotificationCenter
 class TodayViewController: NSViewController, NCWidgetProviding {
 
     var centerReceiver = NSDistributedNotificationCenter()
+    var isPlaying = true;
     
     override var nibName: String? {
         return "TodayViewController"
     }
-
-    
-    @IBOutlet weak var button: NSButton!
     
     override func viewDidAppear() {
-        self.button.target = self;
-        self.button.action = Selector("test");
+        common();
     }
     
     func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)!) {
@@ -31,9 +28,59 @@ class TodayViewController: NSViewController, NCWidgetProviding {
         // time we called you
         completionHandler(.NoData)
     }
-
-    func test() {
-        let notify = NSNotification(name: "SpotifyToday", object: "test")
-        centerReceiver.postNotification(notify)
+    
+    
+    func common() {
+        
     }
+    
+    // MARK: Track info labsl
+    
+    @IBOutlet weak var songLabel: NSTextField!
+    @IBOutlet weak var artistLabel: NSTextField!
+    @IBOutlet weak var albumLabel: NSTextField!
+    @IBOutlet weak var albumArtwork: NSImageView!
+    
+    // MARK: Buttons
+    
+    @IBOutlet weak var addButton: NSButton!
+    
+    @IBOutlet weak var playPauseButton: NSButton!
+    
+    // MARK: Button Actions
+    
+    @IBAction func shareButton(sender: AnyObject) {
+        self.centerReceiver.postNotificationName("SpotifyToday", object: "share", userInfo: nil);
+    }
+    
+    @IBAction func nextButton(sender: AnyObject) {
+        self.centerReceiver.postNotificationName("SpotifyToday", object: "next", userInfo: nil);
+    }
+
+    @IBAction func playButton(sender: AnyObject) {
+        self.centerReceiver.postNotificationName("SpotifyToday", object: "toggle", userInfo: nil);
+    }
+    
+    @IBAction func previousButton(sender: AnyObject) {
+        self.centerReceiver.postNotificationName("SpotifyToday", object: "previous", userInfo: nil);
+    }
+    
+    @IBAction func addButton(sender: AnyObject) {
+        self.centerReceiver.postNotificationName("SpotifyToday", object: "add", userInfo: nil);
+    }
+    
+    
+    func togglePlay() {
+        self.playPauseButton.image = isPlaying ? NSImage(named: "pause") : NSImage(named: "play");
+    }
+    
+    func update() {
+        let defaults = NSUserDefaults(suiteName: "mpf.SpotifyToday.widget");
+        if let data = defaults {
+            self.songLabel.stringValue = data.stringForKey("song") ?? "song";
+            self.artistLabel.stringValue = data.stringForKey("artist") ?? "artst";
+            self.albumLabel.stringValue = data.stringForKey("album") ?? "album";
+        }
+    }
+    
 }
