@@ -44,10 +44,6 @@ class SpotifyAppleScript {
             return SpotifyAppleScript.script("id of current track");
         }
         
-        static func artwork() {
-            
-        }
-        
         static func state() -> String {
             return SpotifyAppleScript.script("player state");
         }
