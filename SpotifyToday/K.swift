@@ -15,12 +15,14 @@ class K: NSObject {
     // URL for auth
     static let SpotifyAuthURL = "https://accounts.spotify.com/authorize";
     static let SpotifyTokenURL = "https://accounts.spotify.com/api/token";
+    static let SpotifyRefreshURL = "https://accounts.spotify.com/api/token";
     
     static let bundle = "mpf.SpotifyToday";
     static let bundleWidget = "mpf.SpotifyToday.widget"
     
     static let STCredKey = "STTokenKey";
-    static let STCredSecretKey = "STTokenSecretKey"
+    static let STCredSecretKey = "STTokenSecretKey";
+    static let STCredRefreshToken = "STTokenRefresh";
     
     // URL generator for adding songs
     static func SpotifyAddSongURL(songID: String) -> String {

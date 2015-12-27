@@ -24,6 +24,7 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         let defs = NSUserDefaults.standardUserDefaults();
+        
         if let _ = defs.objectForKey(K.STCredKey) {
             print("already logged in");
         } else {

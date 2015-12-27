@@ -13,13 +13,17 @@ class TodayViewController: NSViewController, NCWidgetProviding {
 
     var centerReceiver = NSDistributedNotificationCenter()
     var isPlaying = true;
+    var firstShowing = true;
+    var data = Dictionary<String, String>();
     
     override var nibName: String? {
         return "TodayViewController"
     }
     
     override func viewDidAppear() {
-        common();
+        if firstShowing {
+            setUp();
+        }
     }
     
     func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)!) {
@@ -30,8 +34,18 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     }
     
     
-    func common() {
+    func setUp() {
+        firstShowing = false;
+        self.setListener();
+
+        let apps = NSRunningApplication.runningApplicationsWithBundleIdentifier("mpf.SpotifyToday");
         
+        if !apps.isEmpty {
+            let spotify: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("com.spotify.client") as [NSRunningApplication]
+            if !spotify.isEmpty {
+                self.centerReceiver.postNotificationName("SpotifyToday", object: "update", userInfo: nil);
+            }
+        }
     }
     
     // MARK: Track info labsl
@@ -66,20 +80,44 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     }
     
     @IBAction func addButton(sender: AnyObject) {
-        self.centerReceiver.postNotificationName("SpotifyToday", object: "add", userInfo: nil);
+        self.centerReceiver.postNotificationName("SpotifyToday", object: "save", userInfo: nil);
     }
     
+    func setListener() {
+        
+        self.centerReceiver.addObserverForName("SpotifyToday", object: nil, queue: nil) { (notification) -> Void in
+            
+            let x = notification.object as! String;
+            
+            if x == "model" {
+                self.update();
+            }
+        }
+        
+        self.centerReceiver.addObserverForName("com.spotify.client.PlaybackStateChanged", object: nil, queue: nil) { (notification) -> Void in
+            let x = notification.userInfo!
+            let playerState = x["state"] as! String!
+            
+            if playerState != "stopped" {
+                self.centerReceiver.postNotificationName("SpotifyToday", object: "update", userInfo: nil);
+            }
+            
+        }
+    }
     
     func togglePlay() {
         self.playPauseButton.image = isPlaying ? NSImage(named: "pause") : NSImage(named: "play");
     }
     
     func update() {
-        let defaults = NSUserDefaults(suiteName: "mpf.SpotifyToday.widget");
-        if let data = defaults {
-            self.songLabel.stringValue = data.stringForKey("song") ?? "song";
-            self.artistLabel.stringValue = data.stringForKey("artist") ?? "artst";
-            self.albumLabel.stringValue = data.stringForKey("album") ?? "album";
+        
+        
+        let defs = NSUserDefaults(suiteName: "mpf.SpotifyToday.group")!;
+        
+        if let data =  defs.persistentDomainForName("mpf.SpotifyToday.group") {
+            self.songLabel.stringValue = data["song"] as! String
+            self.artistLabel.stringValue = data["artist"] as! String
+            self.albumLabel.stringValue = data["album"] as! String
         }
     }
     

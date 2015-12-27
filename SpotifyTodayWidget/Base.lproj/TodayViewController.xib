@@ -19,10 +19,10 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView simulatedAppContext="notificationCenter" translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="318" height="133.5"/>
+            <rect key="frame" x="0.0" y="0.0" width="318" height="134"/>
             <subviews>
-                <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ok-NU-DnV">
-                    <rect key="frame" x="0.0" y="-1" width="298" height="134"/>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="2Ok-NU-DnV">
+                    <rect key="frame" x="0.0" y="-0.5" width="298" height="134"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SwW-Gx-wBZ">
                             <rect key="frame" x="81" y="10" width="35" height="31"/>
