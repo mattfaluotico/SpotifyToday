@@ -13,10 +13,11 @@ import OAuthSwift
 class STRequest {
     
     private let client: OAuthSwiftClient;
+    private var keychain = NSUserDefaults.standardUserDefaults();
+    private var shouldRefresh = false;
+    private var counter = 0;
     
     init() {
-        
-        let keychain = NSUserDefaults.standardUserDefaults();
         
         let oauthswift = OAuth2Swift(
             consumerKey:    STAuthKeys.oauthConsumerKey!,
@@ -26,9 +27,10 @@ class STRequest {
             responseType:   "code"
         );
         
-        if let token = keychain.stringForKey(K.STCredKey) {
+        
+        if let token = self.keychain.stringForKey(K.STCredKey) {
             oauthswift.client.credential.oauth_token = token;
-            oauthswift.client.credential.oauth_token_secret = keychain.stringForKey(K.STCredSecretKey)!;
+            oauthswift.client.credential.oauth_token_secret = self.keychain.stringForKey(K.STCredSecretKey)!;
         } else {
             STAuth.spotify(oauthswift);
         }
@@ -37,23 +39,72 @@ class STRequest {
     }
     
     func addSong(songID: String, onSuccess callback: () -> ()) {
-    
-        let url = K.SpotifyAddSongURL(songID);
         
-        let bearer = "Bearer \(self.client.credential.oauth_token)";
+        guard counter++ <= 1 // returns if date update doesn't work
+            else {
+                self.counter = 0;
+                return;
+            }
         
-        do {
+        var lastUpdate = self.keychain.objectForKey("date") as? NSDate ?? NSDate();
+        lastUpdate = lastUpdate.dateByAddingTimeInterval(NSTimeInterval(60 * 60));
+        let now = NSDate();
+
+        if lastUpdate.compare(now) == NSComparisonResult.OrderedAscending {
+            self.refresh({ () -> () in
+                self.addSong(songID, onSuccess: { () -> () in
+                    callback();
+                })
+            })
+        } else {
+            let url = K.SpotifyAddSongURL(songID);
             
+            let bearer = "Bearer \(self.client.credential.oauth_token)";
+            
+            self.client.put( url,
+                parameters: [:],
+                headers: ["Accept": "application/json", "Authorization": bearer],
+                success: { (data, response) -> Void in
+                    self.counter = 0;
+                    callback()
+                }) { (error) -> Void in
+                    print("failure to add song");
+                    print(error);
+            }
         }
-        self.client.put(url,
-            parameters: [:],
-            headers: ["Accept": "application/json", "Authorization": bearer],
+    }
+    
+    func refresh(callback: () -> () ) {
+
+        let refreshToken = self.keychain.stringForKey(K.STCredRefreshToken);
+        let params: [String: AnyObject] = ["grant_type": "refresh_token", "refresh_token" : refreshToken!];
+        
+        let preencode = "\(STAuthKeys.oauthConsumerKey!):\(STAuthKeys.oauthSecertKey!)";
+        let utf8 = preencode.dataUsingEncoding(NSUTF8StringEncoding);
+        let encoded = utf8?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0));
+        
+        
+        let auth = "Basic \(encoded!)"
+        let headers = ["Authorization": auth];
+        
+        self.client.post(
+            K.SpotifyRefreshURL,
+            parameters: params,
+            headers: headers,
             success: { (data, response) -> Void in
-                callback()
+                do {
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments);
+                    let access = json["access_token"] as! String;
+                    self.client.credential.oauth_token = access;
+                    STAuth.saveCreds(client: self.client);
+                    print("token refreshed");
+                    callback();
+                    
+                } catch {
+                    print("unable to parse json response");
+                }
             }) { (error) -> Void in
-                print("failure to add song");
                 print(error);
         }
-                
     }
 }

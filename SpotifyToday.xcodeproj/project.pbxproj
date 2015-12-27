@@ -99,6 +99,7 @@
 		AC72769B1C2DD06100117A4D /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		AC72769D1C2DD6A500117A4D /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		AC72769F1C2F1ECC00117A4D /* K.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
+		AC7276A11C2FA6C500117A4D /* SpotifyToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpotifyToday.entitlements; sourceTree = "<group>"; };
 		ACCF9AA01C21EFEE00514BBD /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,13 +147,13 @@
 		AC2018881C1F3B4600F9E775 /* SpotifyToday */ = {
 			isa = PBXGroup;
 			children = (
+				AC7276A11C2FA6C500117A4D /* SpotifyToday.entitlements */,
 				AC72769F1C2F1ECC00117A4D /* K.swift */,
 				AC2018891C1F3B4600F9E775 /* AppDelegate.swift */,
 				AC20188B1C1F3B4600F9E775 /* ViewController.swift */,
 				AC7067041C222A0F00A98646 /* EvenetManager.swift */,
 				AC2B1EAE1C2230FE001C8A25 /* SpotifyAppleScript.swift */,
 				AC2018B51C1F3BB900F9E775 /* Network */,
-				AC2018B41C1F3BA800F9E775 /* Auth */,
 				AC2018B31C1F3BA100F9E775 /* etc */,
 			);
 			path = SpotifyToday;
@@ -176,19 +177,12 @@
 			name = etc;
 			sourceTree = "<group>";
 		};
-		AC2018B41C1F3BA800F9E775 /* Auth */ = {
+		AC2018B51C1F3BB900F9E775 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				AC2018DF1C1F4B0E00F9E775 /* oauth.plist */,
 				AC2018BC1C1F3EFF00F9E775 /* STAuthKeys.swift */,
 				AC2018E11C1F4DE100F9E775 /* STAuth.swift */,
-			);
-			name = Auth;
-			sourceTree = "<group>";
-		};
-		AC2018B51C1F3BB900F9E775 /* Network */ = {
-			isa = PBXGroup;
-			children = (
 				AC2018B61C1F3BF700F9E775 /* STRequest.swift */,
 			);
 			name = Network;
@@ -282,10 +276,20 @@
 					AC2018851C1F3B4600F9E775 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 47BG3W2RV8;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
+						};
 					};
 					AC2B1E991C222E43001C8A25 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 47BG3W2RV8;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -484,6 +488,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SpotifyToday/SpotifyToday.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -501,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SpotifyToday/SpotifyToday.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (

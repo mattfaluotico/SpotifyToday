@@ -11,8 +11,9 @@ import NotificationCenter
 
 class EvenetManager {
 
-    let listener = NSDistributedNotificationCenter()
-    var data = Dictionary<String, String>();
+    let listener = NSDistributedNotificationCenter();
+    var centerReceiver = NSDistributedNotificationCenter();
+    var data = Dictionary<String, AnyObject>();
     let request: STRequest;
     var shouldUpdate = true;
     
@@ -27,15 +28,31 @@ class EvenetManager {
             let cmd = notification.object as! String
         
             switch(cmd) {
-            case "save" : self.save(); break;
-            case "share" : self.share(); break;
-            case "next": SpotifyAppleScript.progress.next();
-            case "previous": SpotifyAppleScript.progress.previous();
-            case "toggle" : SpotifyAppleScript.progress.toggle();
-            case "update" : self.shouldUpdate = true;
-            default: self.updateModel();
+            case "save" :
+                self.save();
+            case "share" :
+                self.share();
+            case "next":
+                SpotifyAppleScript.progress.next();
+                self.updateModel();
+            case "previous":
+                SpotifyAppleScript.progress.previous();
+                self.updateModel();
+            case "toggle" :
+                SpotifyAppleScript.progress.toggle();
+                self.updateModel();
+            case "update" :
+                self.updateModel();
+            case "model" :
+                self.shouldUpdate = true;
+                break;
+            default:
+                "";
             }
             
+            if !self.shouldUpdate {
+                self.centerReceiver.postNotificationName("SpotifyToday", object: "model", userInfo: nil);
+            }
         };
         
         listener.addObserverForName("com.spotify.client.PlaybackStateChanged", object: nil, queue: nil) { (notification) -> Void in
@@ -57,30 +74,41 @@ class EvenetManager {
     
     func updateModel() {
         
-        print("updating data");
-        
         self.data["state"] = SpotifyAppleScript.details.state();
+        let state =  self.data["state"] as! String;
         
-        if !self.shouldUpdate {
-            self.listener.postNotificationName("SpotifyToday", object: "update", userInfo: nil);
-        }
-        
-        if self.data["state"] != "kPSS" {
+        if state != "kPSS" {
             self.data["song"] = SpotifyAppleScript.details.song();
             self.data["artist"] = SpotifyAppleScript.details.artist();
             self.data["album"] = SpotifyAppleScript.details.album();
+            
+            if state == "kPSP" {
+                self.data["playing"] = true;
+            } else if state == "kPSp" {
+                self.data["playing"] = false;
+            }
         }
         
-        print(self.data.description);
         
-        let defaults = NSUserDefaults(suiteName: K.bundleWidget)!;
-        defaults.setPersistentDomain(self.data, forName: K.bundleWidget);
+        let defaults = NSUserDefaults(suiteName: "mpf.SpotifyToday.group")!;
+        defaults.setPersistentDomain(self.data, forName: "mpf.SpotifyToday.group");
         defaults.synchronize();
+        
+    }
+    
+    private func strip(inout songId: String) {
+        // spotify:track:2Ezxd6mkBPVQATDC4CnN3W
+        let range = songId.rangeOfString("spotify:track:");
+        songId.replaceRange(range!, with: "");
     }
     
     func save() {
-        let tid = SpotifyAppleScript.details.id();
+                
+        var tid = SpotifyAppleScript.details.id();
 
+        strip(&tid);
+        print(tid);
+        
         self.request.addSong(tid) { () -> () in
             print("song added");
         }
@@ -88,7 +116,8 @@ class EvenetManager {
     
     func share() {
         
-        let tid = SpotifyAppleScript.details.id();
+        var tid = SpotifyAppleScript.details.id();
+        strip(&tid);
         let shareid = K.SpotifyTrackURL(tid);
         
         let pb = NSPasteboard.generalPasteboard();

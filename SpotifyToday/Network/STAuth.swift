@@ -21,14 +21,16 @@ class STAuth: NSObject {
             responseType:   "code"
         );
         
+        
         auth.authorizeWithCallbackURL(
             
             NSURL(string: "SpotifyToday://oauth-callback/spotify")!,
             scope: "user-library-modify",
             state: generateStateWithLength(20),
             success: { credential, response, parameters in
-                print(credential.oauth_token)
-                self.saveCreds(auth.client);
+                print(response);
+                let refreshToken = parameters["refresh_token"] as! String
+                self.saveCreds(client: auth.client, refreshToken: refreshToken);
             },
             failure: { error in
                 print(error.localizedDescription)
@@ -36,11 +38,17 @@ class STAuth: NSObject {
         );
     }
     
-    static private func saveCreds(client: OAuthSwiftClient) {
+    static func saveCreds(client client: OAuthSwiftClient, refreshToken: String? = nil) {
         
         let keychain = NSUserDefaults.standardUserDefaults();
         keychain.setObject(client.credential.oauth_token, forKey: K.STCredKey);
         keychain.setObject(client.credential.oauth_token_secret, forKey: K.STCredSecretKey);
+        keychain.setObject(NSDate(), forKey: "date");
+        
+        if let r = refreshToken {
+            keychain.setObject(r, forKey: K.STCredRefreshToken);
+        }
+        
         keychain.synchronize();
     }
     
@@ -54,4 +62,5 @@ class STAuth: NSObject {
         }
         return String(randomString);
     }
+    
 }
