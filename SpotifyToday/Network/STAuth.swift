@@ -31,6 +31,8 @@ class STAuth: NSObject {
                 print(response);
                 let refreshToken = parameters["refresh_token"] as! String
                 self.saveCreds(client: auth.client, refreshToken: refreshToken);
+                let listener = NSNotificationCenter.defaultCenter();
+                listener.postNotificationName("Signin", object: nil);
             },
             failure: { error in
                 print(error.localizedDescription)
