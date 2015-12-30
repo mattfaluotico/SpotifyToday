@@ -20,11 +20,12 @@ class TodayViewController: NSViewController, NCWidgetProviding {
         return "TodayViewController"
     }
     
-    override func viewDidAppear() {
+    override func viewWillAppear() {
         if firstShowing {
             setUp();
         }
     }
+    
     
     func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)!) {
         // Update your data and prepare for a snapshot. Call completion handler when you are done
@@ -33,19 +34,26 @@ class TodayViewController: NSViewController, NCWidgetProviding {
         completionHandler(.NoData)
     }
     
-    
     func setUp() {
         firstShowing = false;
         self.setListener();
 
         let apps = NSRunningApplication.runningApplicationsWithBundleIdentifier("mpf.SpotifyToday");
+        let spotify = NSRunningApplication.runningApplicationsWithBundleIdentifier("com.spotify.client");
         
-        if !apps.isEmpty {
-            let spotify: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("com.spotify.client") as [NSRunningApplication]
-            if !spotify.isEmpty {
+        guard !spotify.isEmpty
+            else {
                 self.centerReceiver.postNotificationName("SpotifyToday", object: "update", userInfo: nil);
-            }
+                return;
         }
+        
+        guard !apps.isEmpty
+            else {
+               self.songLabel.stringValue = "Start SpotifyToday main app";
+                return;
+        }
+        
+        self.centerReceiver.postNotificationName("SpotifyToday", object: "update");
     }
     
     // MARK: Track info labsl

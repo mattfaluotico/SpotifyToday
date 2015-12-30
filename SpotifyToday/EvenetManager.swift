@@ -61,21 +61,22 @@ class EvenetManager {
             let state = info["Player State"]! as! String
             let controller = NCWidgetController.widgetController()
             
+            
             if state == "Stopped" {
                 controller.setHasContent(false, forWidgetWithBundleIdentifier: K.bundleWidget)
             } else{
                 controller.setHasContent(true, forWidgetWithBundleIdentifier: K.bundleWidget)
+                self.updateModel();
             }
             
             
-            self.updateModel();
         }
     }
     
     func updateModel() {
         
-        self.data["state"] = SpotifyAppleScript.details.state();
-        let state =  self.data["state"] as! String;
+//        self.data["state"] = SpotifyAppleScript.details.state();
+        let state =  "cat" ;//self.data["state"] as! String;
         
         if state != "kPSS" {
             self.data["song"] = SpotifyAppleScript.details.song();
