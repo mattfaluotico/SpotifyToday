@@ -97,6 +97,8 @@ class STRequest {
                     let access = json["access_token"] as! String;
                     self.client.credential.oauth_token = access;
                     STAuth.saveCreds(client: self.client);
+                    let lastUpdate = NSDate();
+                    self.keychain.setObject(lastUpdate, forKey: "date");
                     print("token refreshed");
                     callback();
                     

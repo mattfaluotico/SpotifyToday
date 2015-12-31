@@ -35,7 +35,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     }
     
     func setUp() {
-        firstShowing = false;
+        self.firstShowing = false;
         self.setListener();
 
         let apps = NSRunningApplication.runningApplicationsWithBundleIdentifier("mpf.SpotifyToday");
@@ -53,7 +53,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
                 return;
         }
         
-        self.centerReceiver.postNotificationName("SpotifyToday", object: "update");
+        self.centerReceiver.postNotificationName("SpotifyToday", object: "bacon", userInfo: nil);
     }
     
     // MARK: Track info labsl
@@ -97,12 +97,13 @@ class TodayViewController: NSViewController, NCWidgetProviding {
             
             let x = notification.object as! String;
             
-            if x == "model" {
+            if x == "updated_ext" {
                 self.update();
             }
         }
         
-        self.centerReceiver.addObserverForName("com.spotify.client.PlaybackStateChanged", object: nil, queue: nil) { (notification) -> Void in
+        // wait for a playback change
+        self.centerReceiver.addObserverForName(K.spPlayback, object: nil, queue: nil) { (notification) -> Void in
             let x = notification.userInfo!
             let playerState = x["state"] as! String!
             
