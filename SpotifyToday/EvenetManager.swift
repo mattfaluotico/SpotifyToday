@@ -11,72 +11,48 @@ import NotificationCenter
 
 class EvenetManager {
 
-    let listener = NSDistributedNotificationCenter();
+    let listener = Listener(withAppId: "SpotifyToday");
     var centerReceiver = NSDistributedNotificationCenter();
     var data = Dictionary<String, AnyObject>();
-    let request: STRequest;
+    let request = STRequest();
     var shouldUpdate = true;
+    var i = 0;
     
     init() {
         
-        self.request = STRequest();
-        
-        listener.addObserverForName("SpotifyToday", object: nil, queue: nil) { (notification) -> Void in
-            
-            self.shouldUpdate = false;
-            
-            let cmd = notification.object as! String
-        
-            switch(cmd) {
-            case "save" :
+        self.listener
+            .on("save") {
+                print("save");
                 self.save();
-            case "share" :
+            }
+            .on("share") {
+                print("share");
                 self.share();
-            case "next":
+            }
+            .on("next") {
+                print("next");
                 SpotifyAppleScript.progress.next();
-                self.updateModel();
-            case "previous":
+            }
+            .on("previous") {
+                print("previous");
                 SpotifyAppleScript.progress.previous();
-                self.updateModel();
-            case "toggle" :
+            }
+            .on("toggle") {
+                print("toggle")
                 SpotifyAppleScript.progress.toggle();
-                self.updateModel();
-            case "update" :
-                self.updateModel();
-            case "model" :
-                self.shouldUpdate = true;
-                break;
-            default:
-                "";
             }
-            
-            if !self.shouldUpdate {
-                self.centerReceiver.postNotificationName("SpotifyToday", object: "model", userInfo: nil);
-            }
-        };
-        
-        listener.addObserverForName("com.spotify.client.PlaybackStateChanged", object: nil, queue: nil) { (notification) -> Void in
-            
-            let info = notification.userInfo!
-            let state = info["Player State"]! as! String
-            let controller = NCWidgetController.widgetController()
-            
-            
-            if state == "Stopped" {
-                controller.setHasContent(false, forWidgetWithBundleIdentifier: K.bundleWidget)
-            } else{
-                controller.setHasContent(true, forWidgetWithBundleIdentifier: K.bundleWidget)
+            .on("update") {
+                print("update");
                 self.updateModel();
             }
-            
-            
-        }
     }
     
     func updateModel() {
         
-//        self.data["state"] = SpotifyAppleScript.details.state();
-        let state =  "cat" ;//self.data["state"] as! String;
+        print("updating");
+        
+        self.data["state"] = SpotifyAppleScript.details.state();
+        let state = self.data["state"] as! String;
         
         if state != "kPSS" {
             self.data["song"] = SpotifyAppleScript.details.song();
@@ -87,16 +63,18 @@ class EvenetManager {
                 self.data["playing"] = true;
             } else if state == "kPSp" {
                 self.data["playing"] = false;
-            }
+            }   
         }
         
-        
-        let defaults = NSUserDefaults(suiteName: "mpf.SpotifyToday.group")!;
-        defaults.setPersistentDomain(self.data, forName: "mpf.SpotifyToday.group");
+        let defaults = NSUserDefaults(suiteName: K.group)!;
+        defaults.setPersistentDomain(self.data, forName: K.group);
         defaults.synchronize();
+        
+        self.listener.post("update_widget");
         
     }
     
+    // strips the extra info from the track id
     private func strip(inout songId: String) {
         // strips the extra info from the track uri
         let range = songId.rangeOfString("spotify:track:");
@@ -111,7 +89,7 @@ class EvenetManager {
         strip(&tid);
         print(tid);
         
-        self.request.addSong(tid) { () -> () in
+        self.request.addSong(tid) {
             print("song added");
             self.notify("share", song: song);
         }

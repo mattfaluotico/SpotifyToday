@@ -11,7 +11,7 @@ import NotificationCenter
 
 class TodayViewController: NSViewController, NCWidgetProviding {
 
-    var centerReceiver = NSDistributedNotificationCenter()
+    var listener = Listener(withAppId: "SpotifyToday");
     var isPlaying = true;
     var firstShowing = true;
     var data = Dictionary<String, String>();
@@ -35,7 +35,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     }
     
     func setUp() {
-        firstShowing = false;
+        self.firstShowing = false;
         self.setListener();
 
         let apps = NSRunningApplication.runningApplicationsWithBundleIdentifier("mpf.SpotifyToday");
@@ -43,7 +43,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
         
         guard !spotify.isEmpty
             else {
-                self.centerReceiver.postNotificationName("SpotifyToday", object: "update", userInfo: nil);
+                self.listener.post("update");
                 return;
         }
         
@@ -53,7 +53,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
                 return;
         }
         
-        self.centerReceiver.postNotificationName("SpotifyToday", object: "update");
+        self.listener.post("update");
     }
     
     // MARK: Track info labsl
@@ -72,44 +72,40 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     // MARK: Button Actions
     
     @IBAction func shareButton(sender: AnyObject) {
-        self.centerReceiver.postNotificationName("SpotifyToday", object: "share", userInfo: nil);
+        self.listener.post("share");
     }
     
     @IBAction func nextButton(sender: AnyObject) {
-        self.centerReceiver.postNotificationName("SpotifyToday", object: "next", userInfo: nil);
+        self.listener.post("next");
     }
 
     @IBAction func playButton(sender: AnyObject) {
-        self.centerReceiver.postNotificationName("SpotifyToday", object: "toggle", userInfo: nil);
+        self.listener.post("toggle");
     }
     
     @IBAction func previousButton(sender: AnyObject) {
-        self.centerReceiver.postNotificationName("SpotifyToday", object: "previous", userInfo: nil);
+        self.listener.post("previous");
     }
     
     @IBAction func addButton(sender: AnyObject) {
-        self.centerReceiver.postNotificationName("SpotifyToday", object: "save", userInfo: nil);
+        self.listener.post("save");
     }
     
     func setListener() {
         
-        self.centerReceiver.addObserverForName("SpotifyToday", object: nil, queue: nil) { (notification) -> Void in
-            
-            let x = notification.object as! String;
-            
-            if x == "model" {
-                self.update();
-            }
+        self.listener.on("update_widget") {
+            self.update();
         }
         
-        self.centerReceiver.addObserverForName("com.spotify.client.PlaybackStateChanged", object: nil, queue: nil) { (notification) -> Void in
-            let x = notification.userInfo!
+        // wait for a playback change
+        Listener(withAppId: K.spPlayback).onAll { (notification) -> () in
+            
+            let x = notification!.userInfo!
             let playerState = x["state"] as! String!
             
             if playerState != "stopped" {
-                self.centerReceiver.postNotificationName("SpotifyToday", object: "update", userInfo: nil);
+                self.listener.post("update");
             }
-            
         }
     }
     
