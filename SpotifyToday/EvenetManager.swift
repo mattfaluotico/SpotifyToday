@@ -14,14 +14,11 @@ class EvenetManager {
     let listener = Listener(withAppId: "SpotifyToday");
     var centerReceiver = NSDistributedNotificationCenter();
     var data = Dictionary<String, AnyObject>();
-    let request: STRequest;
+    let request = STRequest();
     var shouldUpdate = true;
     var i = 0;
     
     init() {
-        
-        self.request = STRequest();
-        
         
         self.listener
             .on("save") {
@@ -69,14 +66,15 @@ class EvenetManager {
             }   
         }
         
-        let defaults = NSUserDefaults(suiteName: "mpf.SpotifyToday.group")!;
-        defaults.setPersistentDomain(self.data, forName: "mpf.SpotifyToday.group");
+        let defaults = NSUserDefaults(suiteName: K.group)!;
+        defaults.setPersistentDomain(self.data, forName: K.group);
         defaults.synchronize();
         
-        self.listener.post("updated_ext");
+        self.listener.post("update_widget");
         
     }
     
+    // strips the extra info from the track id
     private func strip(inout songId: String) {
         // strips the extra info from the track uri
         let range = songId.rangeOfString("spotify:track:");
@@ -91,7 +89,7 @@ class EvenetManager {
         strip(&tid);
         print(tid);
         
-        self.request.addSong(tid) { () -> () in
+        self.request.addSong(tid) {
             print("song added");
             self.notify("share", song: song);
         }

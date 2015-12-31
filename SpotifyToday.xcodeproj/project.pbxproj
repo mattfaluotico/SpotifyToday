@@ -152,13 +152,11 @@
 			isa = PBXGroup;
 			children = (
 				AC7276A11C2FA6C500117A4D /* SpotifyToday.entitlements */,
-				AC72769F1C2F1ECC00117A4D /* K.swift */,
-				ACAA35BF1C349EF8004EBA49 /* Listener.swift */,
 				AC2018891C1F3B4600F9E775 /* AppDelegate.swift */,
 				AC20188B1C1F3B4600F9E775 /* ViewController.swift */,
 				AC7067041C222A0F00A98646 /* EvenetManager.swift */,
-				AC2B1EAE1C2230FE001C8A25 /* SpotifyAppleScript.swift */,
-				AC2018B51C1F3BB900F9E775 /* Network */,
+				AC2018B51C1F3BB900F9E775 /* SpotifyAPIs */,
+				ACAA35C31C34BF53004EBA49 /* Universal */,
 				AC2018B31C1F3BA100F9E775 /* etc */,
 			);
 			path = SpotifyToday;
@@ -182,15 +180,16 @@
 			name = etc;
 			sourceTree = "<group>";
 		};
-		AC2018B51C1F3BB900F9E775 /* Network */ = {
+		AC2018B51C1F3BB900F9E775 /* SpotifyAPIs */ = {
 			isa = PBXGroup;
 			children = (
 				AC2018DF1C1F4B0E00F9E775 /* oauth.plist */,
+				AC2B1EAE1C2230FE001C8A25 /* SpotifyAppleScript.swift */,
 				AC2018BC1C1F3EFF00F9E775 /* STAuthKeys.swift */,
 				AC2018E11C1F4DE100F9E775 /* STAuth.swift */,
 				AC2018B61C1F3BF700F9E775 /* STRequest.swift */,
 			);
-			name = Network;
+			name = SpotifyAPIs;
 			sourceTree = "<group>";
 		};
 		AC20CAFF1C2B571000594732 /* img */ = {
@@ -226,6 +225,15 @@
 				AC2B1E9E1C222E43001C8A25 /* SpotifyTodayWidget.entitlements */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ACAA35C31C34BF53004EBA49 /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+				AC72769F1C2F1ECC00117A4D /* K.swift */,
+				ACAA35BF1C349EF8004EBA49 /* Listener.swift */,
+			);
+			name = Universal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

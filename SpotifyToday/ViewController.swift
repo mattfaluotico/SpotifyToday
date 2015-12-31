@@ -21,12 +21,6 @@ class ViewController: NSViewController {
             self.signedInAlready();
         }
     }
-
-    override var representedObject: AnyObject? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
     
     override func viewDidAppear() {
         let defs = NSUserDefaults.standardUserDefaults();

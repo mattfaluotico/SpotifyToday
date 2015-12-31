@@ -11,7 +11,7 @@ import Cocoa
 class Listener: NSObject {
 
     private var l = NSDistributedNotificationCenter();
-    private var allEvent: (() -> () )?;
+    private var allEvent: ((NSNotification?) -> () )?;
     private let appid: String;
     
     init(withAppId appId: String) {
@@ -25,18 +25,18 @@ class Listener: NSObject {
     // MARK: on
     
     func on(name: String, event: () -> () ) -> Listener {
-
-        self.on(name, eventWithNotification: {(note) -> () in
-            event();
-        });
+        
+        l.addObserverForName(self.appid, object: name, queue: nil) { (notification) -> Void in
+            event()
+        }
         
         return self;
     }
     
-    func on(name: String, eventWithNotification: (NSNotification) -> () ) -> Listener {
+    func on(name: String, withNotification event: NSNotification -> Void ) -> Listener {
         
-        l.addObserverForName(self.appid, object: name, queue: nil) { (n) -> Void in
-            eventWithNotification(n);
+        l.addObserverForName(self.appid, object: name, queue: nil) { (notification) -> Void in
+            event(notification)
         }
         
         return self;
@@ -44,27 +44,11 @@ class Listener: NSObject {
     
     // MARK: all
     
-    func all() {
-        self.allEvent!();
-    }
-    
-    func onAll(event: () -> () ) -> Listener {
-        
-        self.allEvent = event;
-        
-        l.addObserverForName(self.appid, object: nil, queue: nil) { (n) -> Void in
-            self.allEvent!()
-        }
-        
-        return self;
-    }
-    
-    func onAll(eventWithNotification event: (NSNotification) -> () ) -> Listener {
+    func onAll(event: (NSNotification?) -> () ) -> Listener {
         l.addObserverForName(self.appid, object: nil, queue: nil) { (n) -> Void in
             event(n);
         }
         
         return self;
     }
-    
 }

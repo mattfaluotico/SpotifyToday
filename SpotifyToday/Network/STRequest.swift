@@ -40,25 +40,28 @@ class STRequest {
     
     func addSong(songID: String, onSuccess callback: () -> ()) {
         
-        guard counter++ <= 1 // returns if date update doesn't work
+        guard self.counter++ <= 1 // returns if date update doesn't work
             else {
                 self.counter = 0;
                 return;
             }
         
-        var lastUpdate = self.keychain.objectForKey("date") as? NSDate ?? NSDate();
+        
+        var lastUpdate = self.keychain.objectForKey("date") as! NSDate;
         lastUpdate = lastUpdate.dateByAddingTimeInterval(NSTimeInterval(60 * 60));
         let now = NSDate();
 
         if lastUpdate.compare(now) == NSComparisonResult.OrderedAscending {
-            self.refresh({ () -> () in
-                self.addSong(songID, onSuccess: { () -> () in
-                    callback();
-                })
-            })
-        } else {
-            let url = K.SpotifyAddSongURL(songID);
             
+            self.refresh() {
+                self.addSong(songID) {
+                    callback();
+                }
+            }
+            
+        } else {
+            
+            let url = K.SpotifyAddSongURL(songID);
             let bearer = "Bearer \(self.client.credential.oauth_token)";
             
             self.client.put( url,
@@ -67,10 +70,11 @@ class STRequest {
                 success: { (data, response) -> Void in
                     self.counter = 0;
                     callback()
-                }) { (error) -> Void in
+                },
+                failure: { (error) -> Void in
                     print("failure to add song");
                     print(error);
-            }
+            });
         }
     }
     
@@ -105,8 +109,9 @@ class STRequest {
                 } catch {
                     print("unable to parse json response");
                 }
-            }) { (error) -> Void in
+            },
+            failure: { (error) -> Void in
                 print(error);
-        }
+        });
     }
 }
