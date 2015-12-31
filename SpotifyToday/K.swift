@@ -24,6 +24,8 @@ class K: NSObject {
     static let STCredSecretKey = "STTokenSecretKey";
     static let STCredRefreshToken = "STTokenRefresh";
     
+    static let spPlayback = "com.spotify.client.PlaybackStateChanged";
+    
     // URL generator for adding songs
     static func SpotifyAddSongURL(songID: String) -> String {
         return "https://api.spotify.com/v1/me/tracks?ids=\(songID)";
