@@ -28,6 +28,7 @@
 		AC2B1EA71C222E43001C8A25 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC2B1EA51C222E43001C8A25 /* InfoPlist.strings */; };
 		AC2B1EAA1C222E43001C8A25 /* SpotifyTodayWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AC2B1E9A1C222E43001C8A25 /* SpotifyTodayWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AC2B1EAF1C2230FE001C8A25 /* SpotifyAppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2B1EAE1C2230FE001C8A25 /* SpotifyAppleScript.swift */; };
+		AC2DC2FF1C34EA9A00DCC474 /* SpotifyAppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2B1EAE1C2230FE001C8A25 /* SpotifyAppleScript.swift */; };
 		AC7067051C222A0F00A98646 /* EvenetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7067041C222A0F00A98646 /* EvenetManager.swift */; };
 		AC72769C1C2DD06100117A4D /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = AC72769B1C2DD06100117A4D /* share.png */; };
 		AC72769E1C2DD6A500117A4D /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = AC72769D1C2DD6A500117A4D /* default.png */; };
@@ -92,7 +93,6 @@
 		AC20CAF81C2B570C00594732 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		AC20CAF91C2B570C00594732 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = previous.png; sourceTree = "<group>"; };
 		AC2B1E9A1C222E43001C8A25 /* SpotifyTodayWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpotifyTodayWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC2B1E9E1C222E43001C8A25 /* SpotifyTodayWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpotifyTodayWidget.entitlements; sourceTree = "<group>"; };
 		AC2B1E9F1C222E43001C8A25 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		AC2B1EA21C222E43001C8A25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TodayViewController.xib; sourceTree = "<group>"; };
 		AC2B1EA41C222E43001C8A25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,8 +102,9 @@
 		AC72769B1C2DD06100117A4D /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		AC72769D1C2DD6A500117A4D /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		AC72769F1C2F1ECC00117A4D /* K.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
-		AC7276A11C2FA6C500117A4D /* SpotifyToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpotifyToday.entitlements; sourceTree = "<group>"; };
 		ACAA35BF1C349EF8004EBA49 /* Listener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listener.swift; sourceTree = "<group>"; };
+		ACC16A5D1C3505B200B8A36C /* SpotifyTodayWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpotifyTodayWidget.entitlements; sourceTree = "<group>"; };
+		ACC16A5E1C35064B00B8A36C /* SpotifyToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpotifyToday.entitlements; sourceTree = "<group>"; };
 		ACCF9AA01C21EFEE00514BBD /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,7 +152,7 @@
 		AC2018881C1F3B4600F9E775 /* SpotifyToday */ = {
 			isa = PBXGroup;
 			children = (
-				AC7276A11C2FA6C500117A4D /* SpotifyToday.entitlements */,
+				ACC16A5E1C35064B00B8A36C /* SpotifyToday.entitlements */,
 				AC2018891C1F3B4600F9E775 /* AppDelegate.swift */,
 				AC20188B1C1F3B4600F9E775 /* ViewController.swift */,
 				AC7067041C222A0F00A98646 /* EvenetManager.swift */,
@@ -209,6 +210,7 @@
 		AC2B1E9C1C222E43001C8A25 /* SpotifyTodayWidget */ = {
 			isa = PBXGroup;
 			children = (
+				ACC16A5D1C3505B200B8A36C /* SpotifyTodayWidget.entitlements */,
 				AC20CAFF1C2B571000594732 /* img */,
 				AC2B1E9F1C222E43001C8A25 /* TodayViewController.swift */,
 				AC2B1EA11C222E43001C8A25 /* TodayViewController.xib */,
@@ -222,7 +224,6 @@
 		AC2B1E9D1C222E43001C8A25 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AC2B1E9E1C222E43001C8A25 /* SpotifyTodayWidget.entitlements */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -302,6 +303,9 @@
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
 							};
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -376,6 +380,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC2DC2FF1C34EA9A00DCC474 /* SpotifyAppleScript.swift in Sources */,
 				ACAA35C21C34A799004EBA49 /* K.swift in Sources */,
 				ACAA35C11C34A794004EBA49 /* Listener.swift in Sources */,
 				AC2B1EA01C222E43001C8A25 /* TodayViewController.swift in Sources */,

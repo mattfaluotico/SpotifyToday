@@ -15,18 +15,22 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     var isPlaying = true;
     var firstShowing = true;
     var data = Dictionary<String, String>();
+    var setup = 0;
+    var appearing = 0;
     
     override var nibName: String? {
         return "TodayViewController"
     }
     
+    
     override func viewWillAppear() {
+        self.appearing++;
         if firstShowing {
             setUp();
         }
     }
     
-    
+
     func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)!) {
         // Update your data and prepare for a snapshot. Call completion handler when you are done
         // with NoData if nothing has changed or NewData if there is new data since the last
@@ -38,6 +42,8 @@ class TodayViewController: NSViewController, NCWidgetProviding {
         self.firstShowing = false;
         self.setListener();
 
+        self.setup++;
+        
         let apps = NSRunningApplication.runningApplicationsWithBundleIdentifier("mpf.SpotifyToday");
         let spotify = NSRunningApplication.runningApplicationsWithBundleIdentifier("com.spotify.client");
         
@@ -110,20 +116,19 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     }
     
     func togglePlay() {
-        self.playPauseButton.image = isPlaying ? NSImage(named: "pause") : NSImage(named: "play");
+        self.playPauseButton.image = self.isPlaying ? NSImage(named: "pause") : NSImage(named: "play");
     }
     
     func update() {
         
-        let defs = NSUserDefaults(suiteName: "mpf.SpotifyToday.group")!;
+        let defs = NSUserDefaults(suiteName: K.group);
         
-        if let data =  defs.persistentDomainForName("mpf.SpotifyToday.group") {
-            self.songLabel.stringValue = data["song"] as! String
-            self.artistLabel.stringValue = data["artist"] as! String
-            self.albumLabel.stringValue = data["album"] as! String
-            self.isPlaying = data["playing"] as! Bool
+        if let defaults = defs {
+            self.songLabel.stringValue = defaults.stringForKey("song") ?? "Song";
+            self.artistLabel.stringValue = defaults.stringForKey("artist") ?? "Artist";
+            self.albumLabel.stringValue = defaults.stringForKey("album") ?? "Album";
+            self.isPlaying = defaults.boolForKey("playing");
             self.togglePlay();
-
         }
     }
     

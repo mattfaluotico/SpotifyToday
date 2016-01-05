@@ -13,12 +13,13 @@ class EvenetManager {
 
     let listener = Listener(withAppId: "SpotifyToday");
     var centerReceiver = NSDistributedNotificationCenter();
-    var data = Dictionary<String, AnyObject>();
     let request = STRequest();
     var shouldUpdate = true;
     var i = 0;
     
     init() {
+        
+        print("creating");
         
         self.listener
             .on("save") {
@@ -50,24 +51,23 @@ class EvenetManager {
     func updateModel() {
         
         print("updating");
+        let defaults = NSUserDefaults(suiteName: K.group)!;
         
-        self.data["state"] = SpotifyAppleScript.details.state();
-        let state = self.data["state"] as! String;
+        let state = SpotifyAppleScript.details.state();
         
         if state != "kPSS" {
-            self.data["song"] = SpotifyAppleScript.details.song();
-            self.data["artist"] = SpotifyAppleScript.details.artist();
-            self.data["album"] = SpotifyAppleScript.details.album();
+            defaults.setObject(SpotifyAppleScript.details.song(), forKey: "song");
+            defaults.setObject(SpotifyAppleScript.details.artist(), forKey: "artist");
+            defaults.setObject(SpotifyAppleScript.details.album(), forKey: "album");
+            defaults.setObject(state, forKey: "state");
             
             if state == "kPSP" {
-                self.data["playing"] = true;
+                defaults.setBool(true, forKey: "playing");
             } else if state == "kPSp" {
-                self.data["playing"] = false;
-            }   
+                defaults.setBool(false, forKey: "playing");
+            }
         }
         
-        let defaults = NSUserDefaults(suiteName: K.group)!;
-        defaults.setPersistentDomain(self.data, forName: K.group);
         defaults.synchronize();
         
         self.listener.post("update_widget");
@@ -91,7 +91,7 @@ class EvenetManager {
         
         self.request.addSong(tid) {
             print("song added");
-            self.notify("share", song: song);
+            self.notify("save", song: song);
         }
     }
     

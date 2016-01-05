@@ -20,7 +20,7 @@ class K: NSObject {
     // MARK: Bundles
     static let bundle = "mpf.SpotifyToday";
     static let bundleWidget = "mpf.SpotifyToday.widget";
-    static let group = "mpf.SpotifyToday.group";
+    static let group = "mpf.apps";
     
     // MARK: Keys
     static let STCredKey = "STTokenKey";
