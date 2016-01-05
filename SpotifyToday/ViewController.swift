@@ -10,7 +10,7 @@ import Cocoa
 
 class ViewController: NSViewController {
 
-    var em: EvenetManager?;
+    var em: EventManager?;
     @IBOutlet weak var signin: NSButton!
     
     override func viewDidLoad() {
@@ -32,7 +32,7 @@ class ViewController: NSViewController {
     
     func signedInAlready() {
         print("already logged in");
-        self.em = EvenetManager();
+        self.em = EventManager();
         self.signin.enabled = false;
         self.signin.title = "You're already signed in";
     }

@@ -9,7 +9,7 @@
 import Cocoa
 import NotificationCenter
 
-class EvenetManager {
+class EventManager {
 
     let listener = Listener(withAppId: "SpotifyToday");
     var centerReceiver = NSDistributedNotificationCenter();
